@@ -48,6 +48,7 @@ audio{
     display: flex;
     flex-direction: column;
     background-color: rgb(14, 14, 14);
+    overflow-x: auto;
 }
 
 .upperspecs {
@@ -60,8 +61,9 @@ audio{
     height: 45%;
     margin-left: 1%;
     margin-right: 1%;
-    background-color: rgb(22, 22, 22);
-    border-radius: 10%;
+    background-color: rgb(49, 49, 49);
+    box-shadow: 4px 4px 4px black;
+    
 }
 
 .chmusic {
