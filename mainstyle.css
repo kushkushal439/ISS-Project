@@ -105,13 +105,13 @@
 
 .duration {
     border: 2px solid palevioletred;
-    height: 20%; 
+    height: 33%; 
 }
 
 .durationtxt {
     font-size: 1.5em;
     margin-left: 1%;
-    margin-top: 4%;
+    margin-top: 8.5%;
 }
 
 .durinput {
@@ -119,3 +119,45 @@
     width: 10%;
     margin-top: 1%;
 }
+
+.resolution {
+    border: 2px solid palevioletred;
+    height: 33%;
+    display: flex;
+    flex-direction: row;
+}
+
+.restxt{
+    font-size: 1.5em;
+    margin-left: 1%;
+    margin-top: 8.5%;
+}
+
+.resdrop {
+    border: 2px solid salmon;
+    width: 40%;
+    margin-top: 5.5%;
+    height: 45%;
+}
+
+
+.transition {
+    border: 2px solid palevioletred;
+    height: 33%;
+    display: flex;
+    flex-direction: row;
+}
+
+.transtxt{
+    font-size: 1.5em;
+    margin-left: 1%;
+    margin-top: 8.5%;
+}
+
+.transdrop {
+    border: 2px solid salmon;
+    width: 40%;
+    margin-top: 5.5%;
+    height: 45%;
+}
+
