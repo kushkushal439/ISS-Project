@@ -4,6 +4,11 @@
     box-sizing: border-box;
 }
 
+body {
+    background-color: black;
+    color: white;
+}
+
 audio{
     height: 5vh;
 }
@@ -11,39 +16,42 @@ audio{
 
 
 .upper-div {
+    background-color: black;
     display: flex;
     flex-direction: row;
     height: 75vh;
-    border: 4px solid black;
+    border: 1px solid black;
+}
+
+.goback {
+    color: red;
+    text-decoration: none;
+    padding: 1%;
+    transition: 0.2s;
+    width: 10%;
+}
+
+.goback:hover {
+    padding-top: 0.8%;
 }
 
 .vid {
-    border: 4px solid black;
     width: 70%;
     display:flex;
     flex-direction:column;
     justify-content:center;
     align-items:center;
-    background-color: rgb(48, 46, 46);
-
+    background-color: rgb(9, 9, 9);
 }
 
 .specs {
-    border: 4px solid black;
     width: calc(100% - 70%);
     display: flex;
     flex-direction: column;
-    background-color: rgb(199, 188, 188);
+    background-color: rgb(14, 14, 14);
 }
-/* 
-
-.tellsee {
-    margin-top: 0.5%;
-    border: 2px solid rgb(105, 56, 56);
-} */
 
 .upperspecs {
-    border: 2px solid rgb(0, 62, 62);
     padding: 2px;
     height: 40%;
 }
@@ -53,8 +61,8 @@ audio{
     height: 45%;
     margin-left: 1%;
     margin-right: 1%;
-    border: 2px solid black;
-    background-color: rgb(117, 113, 113);
+    background-color: rgb(22, 22, 22);
+    border-radius: 10%;
 }
 
 .chmusic {
@@ -70,7 +78,7 @@ audio{
     margin-right: 1%;
     margin-top: 2%;
     height: 15%;
-    border: 2px solid black;
+    border: 1px solid black;
     background-color: rgb(180, 180, 51);
     padding-top:2%;
     padding-left: 1%;
@@ -86,8 +94,7 @@ audio{
 .specname {
     padding-top: 2%;
     padding-left: 1%;
-    color: gray;
-    border: 2px solid gray;
+    color: rgb(255, 255, 255);
     font-size: 2em;
     height: 15%;
     display:flex;
@@ -101,16 +108,18 @@ audio{
 }
 
 .duration {
-  
     height: 33%; 
     display:flex;
     justify-content: left;
     align-items:center;
+    padding-left: 2%;
 }
 
 .durinput {
-    color: rgb(67, 67, 67);
+    color: rgb(255, 255, 255);
     width: 10%;
+    background-color: black;
+    border: .1px solid  white;
     margin-top: 1%;
 }
 
@@ -123,11 +132,6 @@ audio{
     align-items:center;
 }
 
-.restxt{
-    font-size: 1.5em;
-    margin-left: 1%;
-    margin-top: 8.5%;
-}
 
 .resdrop {
     width: 40%;
@@ -146,27 +150,40 @@ audio{
 }
 
 
+.dropdown select{
+    color: white;
+}
+
+.dropdown select option {
+    color: white;
+}
+
+.selecter {
+    background-color: black;
+}
+
 
 
 .lower-div {
-width: 100%;
-background-color: wheat;
-border: 4px solid black;
-height: calc(100vh - 75vh);
+    width: 100%;
+    border: 0.001px solid black;
+    background-color: rgb(36, 36, 36);
+    height: calc(100vh - 75vh);
 }
 
 .lower-div .viewpics {
-background-color: rgb(141, 200, 132);
-margin: 1%;
-height: 85%;
-border: 2px solid red;
-overflow-x: auto;
-white-space: nowrap;
+    background-color: rgb(0, 0, 0);
+    margin: 1%;
+    height: 80%;
+    overflow-x: auto;
+    white-space: nowrap;
 }
 
 .viewpics img {
+    margin-top: 1%;
+    margin-left: 1%;
     justify-content: center;
-    max-height: 90%;
+    max-height: 80%;
 }
 
 .viewpics::-webkit-scrollbar {

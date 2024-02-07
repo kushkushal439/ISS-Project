@@ -10,7 +10,6 @@
 
 <body>
     <div class="upper-div">
-    
         <div class="vid">
             <div style="color:aliceblue; margin-bottom:5vh;">
                 <h2>Video Preview</h2>
@@ -33,8 +32,8 @@
                     </select>
                 </div>
              
-                   <audio  height="1vh"controls>
-                    <source src="audio.ogg" type="audio/ogg">
+                   <audio  height="1vh"controls style = "margin-top: 2em;">
+                    <source src="audio.ogg" type="audio/ogg">   
                    </audio>
                
             </div>
@@ -47,21 +46,25 @@
                       
                     </div>
                     <div class="resolution">
-                        <label>Resolution:&nbsp;&nbsp;&nbsp;</label>
-                        <select>
+                        <label style = "padding-left: 2%;">Resolution:&nbsp;&nbsp;&nbsp;</label>
+                        <div class="dropdown">
+                        <select class = "selecter">
                             <option>Shit resolution</option>
                             <option>Ok resolution</option>
                             <option>OP resolution</option>
                         </select>
+                        </div>
 
                     </div>
                     <div class="transition">
-                        <label> Choose your transition:&nbsp;&nbsp;</label>
-                        <select>
+                        <label style = "padding-left: 2%;"> Choose your transition:&nbsp;&nbsp;</label>
+                        <div class = "dropdown">
+                        <select class = "selecter">
                             <option>None</option>
                             <option>Smooth</option>
                             <option>Beautiful</option>
                         </select> 
+                        </div>
                     </div>
                 </div>
             </div>
