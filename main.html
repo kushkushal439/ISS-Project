@@ -1,15 +1,17 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Main Page</title>
-    <link rel = "stylesheet" href = "mainstyle.css">
+    <link rel="stylesheet" href="mainstyle.css">
 </head>
+
 <body>
     <div class="upper-div">
         <div class="vid">
-            <video width="60%" height="60%"id="vid" controls>
+            <video width="60%" height="60%" id="vid" controls>
                 <source src="test.mp4" type="video/mp4">
             </video>
         </div>
@@ -18,30 +20,44 @@
                 <div class="addpics">
                     addpics
                 </div>
-                <div class="chmusic">Choose your music</div>
-                <div class="music">
-                    drop down here
+                <div class="chmusic">
+                    <label>Choose Background Music: </label>
+                    <select>
+                        <option> Happy Birthday</option>
+                        <option> Rick roll</option>
+                        <option> Yaari </option>
+                    </select>
                 </div>
+             
+                   <audio  height="1vh"controls>
+                    <source src="audio.ogg" type="audio/ogg">
+                   </audio>
+               
             </div>
             <div class="lowerspecs">
                 <div class="specname">Specifications: </div>
                 <div class="options">
                     <div class="duration">
-                        <div class="durationtxt">
-                            <label>duration: <input class = "durinput" id = "durinput"></label>
-                        </div>
+                 
+                        <label>duration: <input class="durinput" id="durinput"></label>
+                      
                     </div>
                     <div class="resolution">
-                        <div class="restxt">
-                            Choose your resolution:&nbsp;&nbsp;
-                        </div>
-                            <div class="resdrop">DROPDOWN FOR RESOLUTION HERE</div>
+                        <label>Resolution:&nbsp;&nbsp;&nbsp;</label>
+                        <select>
+                            <option>Shit resolution</option>
+                            <option>Ok resolution</option>
+                            <option>OP resolution</option>
+                        </select>
+
                     </div>
                     <div class="transition">
-                        <div class="transtxt">
-                            Choose your transition:&nbsp;&nbsp;
-                        </div>
-                            <div class="transdrop">DROPDOWN FOR TRANSITION HERE</div>
+                        <label> Choose your transition:&nbsp;&nbsp;</label>
+                        <select>
+                            <option>None</option>
+                            <option>Smooth</option>
+                            <option>Beautiful</option>
+                        </select> 
                     </div>
                 </div>
             </div>
@@ -53,4 +69,5 @@
         </div>
     </div>
 </body>
+
 </html>

@@ -4,6 +4,10 @@
     box-sizing: border-box;
 }
 
+audio{
+    height: 5vh;
+}
+
 
 
 .upper-div {
@@ -27,6 +31,7 @@
     width: calc(100% - 70%);
     display: flex;
     flex-direction: column;
+    background-color: rgb(199, 188, 188);
 }
 
 .lower-div {
@@ -34,6 +39,7 @@
     background-color: wheat;
     border: 4px solid black;
     height: calc(100vh - 75vh);
+
 }
 
 
@@ -46,7 +52,7 @@
     background-color: rgb(141, 200, 132);
     margin: 1%;
     height: 85%;
-    border: 2px solid red;
+
 }
 
 .upperspecs {
@@ -68,8 +74,7 @@
     margin-left: 1%;
     margin-right: 1%;
     margin-top: 1%;
-    border: 2px solid brown;
-    font-size: 1.5em;
+ 
 }
 
 
@@ -82,11 +87,13 @@
     background-color: rgb(180, 180, 51);
     padding-top:2%;
     padding-left: 1%;
+    display:flex;
+    
 }
 
 .lowerspecs {
     height: 60%;
-    border: 2px solid red;
+  
 }
 
 .specname {
@@ -95,23 +102,23 @@
     color: gray;
     border: 2px solid gray;
     font-size: 2em;
-    height: 15%
+    height: 15%;
+    display:flex;
+    justify-content:left;
+    align-items:center;
 }
 
 .options {
     height: 85%;
-    border: 2px solid yellow;
+ 
 }
 
 .duration {
-    border: 2px solid palevioletred;
+  
     height: 33%; 
-}
-
-.durationtxt {
-    font-size: 1.5em;
-    margin-left: 1%;
-    margin-top: 8.5%;
+    display:flex;
+    justify-content: left;
+    align-items:center;
 }
 
 .durinput {
@@ -121,10 +128,12 @@
 }
 
 .resolution {
-    border: 2px solid palevioletred;
+  
     height: 33%;
     display: flex;
     flex-direction: row;
+    justify-content:left;
+    align-items:center;
 }
 
 .restxt{
@@ -134,7 +143,6 @@
 }
 
 .resdrop {
-    border: 2px solid salmon;
     width: 40%;
     margin-top: 5.5%;
     height: 45%;
@@ -142,22 +150,13 @@
 
 
 .transition {
-    border: 2px solid palevioletred;
+ 
     height: 33%;
     display: flex;
     flex-direction: row;
+    justify-content: left;
+    align-items:center;
 }
 
-.transtxt{
-    font-size: 1.5em;
-    margin-left: 1%;
-    margin-top: 8.5%;
-}
 
-.transdrop {
-    border: 2px solid salmon;
-    width: 40%;
-    margin-top: 5.5%;
-    height: 45%;
-}
 
