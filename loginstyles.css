@@ -2,6 +2,10 @@ body {
   background-color: #9d0025;
   color: #9c0226 ;
   padding: 0%;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+
   /* overflow-x: hidden; */
 }
 
@@ -13,20 +17,20 @@ body {
 
 
 .box {
-  height: 60vh;
-  width: 40%;
-  margin-left: 30%;
-  margin-top: 10%;
+  margin-top:15vh;
+  height: 70vh;
+  width: 30%;
   border-radius: 5%;
   background-color: white;
   display: flex;
   flex-direction: column;
   box-shadow: 7px 10px 20px rgb(63, 63, 63);
+  opacity:80%;
 }
 
 .name {
-  font-size: 8em;
-  text-align: center;
+  font-size: 4em;
+  padding-left:3vw;
   margin-top: 3%;
   font-family: Roboto;
 }
@@ -64,7 +68,7 @@ body {
   width: 30%;
   height: 10%;
   margin-left: 35%;
-  margin-top: 5%;
+  margin-top: 10%;
   border-radius: 10%;
   color: white;
   font-size: 2em;
