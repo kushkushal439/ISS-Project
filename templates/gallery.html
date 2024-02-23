@@ -4,16 +4,40 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/gallery.css') }}">
-    <link href="https://fonts.googleapis.com/css?family=Ubuntu:300,300italic,regular,italic,500,500italic,700,700italic" rel="stylesheet" />
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <div class="back"><a href = "intro.html"> back</a></div>
-    <h1> Welcome to Gallery</h1>
-    <div class="showpics">
-        {% for image in images %}
-        <img src="{{ url_for('static', filename = image) }}" alt="saiufvas" max-height="10vh">
-        {% endfor %}
-    </div>
+    <div class="back"><a href="intro.html">Back</a></div>
+    <h1>Welcome to Gallery</h1>
+    <form id="imageForm" name = "imageForm" action="/gallery" method="POST">
+        <div class="showpics">
+            {% for image in images %}
+            <div class="image-container">
+                <img src="{{ url_for('static', filename=image) }}" alt="saiufvas" style="max-height: 10vh;">
+                <label>
+                    <input type="checkbox" name="selected_images" value="{{ image }}">
+                    Select
+                </label>
+            </div>
+            {% endfor %}
+        </div>
+        <!-- Hidden input field to store selected images -->
+        <input type="hidden" id="selectedImagesInput" name="selectedImagesInput">
+        <input type="submit" value="Submit">
+    </form>
+
+    <script>
+        document.getElementById('imageForm').addEventListener('submit', function(event) {
+            var selectedImages = [];
+            var checkboxes = document.getElementsByName('selected_images');
+            for (var i = 0; i < checkboxes.length; i++) {
+                if (checkboxes[i].checked) {
+                    selectedImages.push(checkboxes[i].value);
+                }
+            }
+            // Set the value of a hidden input field to send selected images to Flask
+            document.getElementById('selectedImagesInput').value = JSON.stringify(selectedImages);
+        });
+    </script>
 </body>
 </html>

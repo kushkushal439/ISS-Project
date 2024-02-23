@@ -1,5 +1,5 @@
 body {
-  background-color: #9d0025;
+  background-image: url("https://wallpapers.com/images/hd/3d-red-and-black-polygon-w0xm5hsgnjeajcnr.jpg");
   color: #9c0226 ;
   padding: 0%;
   display:flex;
@@ -21,15 +21,15 @@ body {
   height: 70vh;
   width: 30%;
   border-radius: 5%;
-  background-color: white;
+  background-color:rgba(0, 0, 0, 0.77);
   display: flex;
   flex-direction: column;
   box-shadow: 7px 10px 20px rgb(63, 63, 63);
-  opacity:80%;
+  /* opacity:60%; */
 }
 
 .name {
-  font-size: 4em;
+  font-size: 3em;
   padding-left:3vw;
   margin-top: 3%;
   font-family: Roboto;
@@ -46,31 +46,36 @@ body {
   border-radius: 1%;
   width: 80%;
   margin-top: 7%;
-  border: 6px solid #9d0025;
+
   border-radius: 2%;
   height: 12%;
   margin-left: 10%;
   font-size: 1.75em;
-  padding-left: 1%;
+  padding-left: 3%;
   font-family: Protest Strike;
   color: rgb(63, 63, 63);
-  caret-color: transparent;
+  caret-color:black;
   transition: 0.2s;
+  background-color: rgb(202, 198, 198);
+  border-radius:20px;
 }
+
+
 
 .userinput:focus {
   box-shadow: 2px 2px 10px black;
   outline: none;
+  border: 3px solid #9d0025;
 }
 
-.submit {
+button {
   background-color: #9c0226;
-  width: 30%;
-  height: 10%;
-  margin-left: 35%;
+  margin-left: 33%;
   margin-top: 10%;
+  padding:2%;
   border-radius: 10%;
   color: white;
   font-size: 2em;
-  font-family: Protest Strike;
+  font-family: Roboto;
+  font-weight: bold;
 }

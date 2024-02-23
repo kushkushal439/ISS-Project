@@ -203,19 +203,55 @@ def addimage():
         return  render_template('addimage.html')
     
 
-@app.route('/gallery', methods = ["GET"])
+# @app.route('/gallery', methods = ["GET"])
+# @jwt_required()
+# def usrimagelist():
+
+#     if not os.path.exists(output_dir):
+#            os.makedirs(output_dir)
+#     id = get_jwt_identity()
+#     id = int(id)
+#     print(f"Users is {id}")
+#     # print("Hellog6fh4ferfr5")
+
+#     sql = "SELECT user_id, img_id, image_data FROM images WHERE images.user_id = %s"
+#     cursor.execute(sql,(id,))
+#     data = cursor.fetchall()
+#     iter = 0
+#     for i in data:
+#         iter = iter + 1
+#         name = "img" + str(iter) + ".jpg"
+#         output_path = os.path.join(output_dir,name)
+#         img1 = Image.open(io.BytesIO(i[2]))
+
+#         if img1.mode == 'RGBA':
+#             img1 = img1.convert('RGB')
+#         img1.save(output_path)
+
+#     images = [f for f in os.listdir(output_dir) if os.path.isfile(os.path.join(output_dir, f))]
+#     image_paths = [os.path.join('images', img) for img in images]
+
+#     return render_template('gallery.html', images = image_paths)
+    
+
+@app.route('/gallery', methods = ["GET","POST"])
 @jwt_required()
 def usrimagelist():
-
-    if not os.path.exists(output_dir):
-           os.makedirs(output_dir)
-    id = get_jwt_identity()
-    id = int(id)
-    print(f"Users is {id}")
-    # print("Hellog6fh4ferfr5")
-
+    if request.method == "POST":
+            sring = request.form['selectedImagesInput']
+            selected_images = json.loads(sring)
+            finaloutdir = "static/selected"
+            if not os.path.exists(finaloutdir):
+                os.makedirs(finaloutdir)
+            for name in selected_images:
+                name1 = name[7:]
+                input_path = os.path.join(output_dir,name1)
+                output_path = os.path.join(finaloutdir,name1)
+                shutil.copy(input_path,output_path)
+            return render_template("main.html")
+    userid = int(get_jwt_identity())
     sql = "SELECT user_id, img_id, image_data FROM images WHERE images.user_id = %s"
-    cursor.execute(sql,(id,))
+    cursor.execute(sql,(userid,))
     data = cursor.fetchall()
     iter = 0
     for i in data:
@@ -230,7 +266,6 @@ def usrimagelist():
 
     images = [f for f in os.listdir(output_dir) if os.path.isfile(os.path.join(output_dir, f))]
     image_paths = [os.path.join('images', img) for img in images]
-
     return render_template('gallery.html', images = image_paths)
 
 
@@ -240,6 +275,8 @@ def logout():
     response = jsonify({"msg": "logout successful"})
     unset_jwt_cookies(response)
     shutil.rmtree('/home/hibiki/Desktop/project/ISS-Project/static/images')
+    shutil.rmtree('/home/hibiki/Desktop/project/ISS-Project/static/selected')
+
     return response
 
 
