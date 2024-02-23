@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            font-family: sans-serif;
+            box-sizing: border-box;
+            background-color: gray;
+        }
+        .outer {
+            margin-top: 11%;
+            justify-content: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        #droparea {
+            background-color: rgb(255, 255, 255);
+            width: 50vw;
+            height: 40vh;
+            padding: 30px;
+            text-align: center;
+            border-radius: 20px;
+        }
+        .imageview{
+            background-color: white;
+            width: 100%;
+            height: 100%;
+            border-radius: 20px;
+            border: 2px dashed rgb(119, 119, 119);
+            /* background-position: center;
+            background-size: cover; */
+        }
+
+        input[type="submit"] {
+        /* Your existing styles for the submit button */
+        background-color: #4CAF50;
+        color: white;
+        padding: 14px 20px;
+        margin: 8px 0;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        display: inline-block; /* Ensure the submit button occupies only the necessary space */
+    }
+
+
+    </style>
+</head>
+<body>
+    <div class="outer" id = "outer">
+        <form action   ="/addimages" method="POST" enctype="multipart/form-data">
+            <div class="droparea" id = "droparea">
+        <!-- <label for="inputfile" class = "droparea" id = "droparea"> -->
+            <input type="file" multiple accept = "image/*" id = "file" name = "file" style = "background-color: white;">
+            <div class="imageview" id = "imageview">
+                <img src="imgindiv.png" height="50%" width="20%" style = "margin: 30px; display: inline-block;">
+                <p style = "background-color: white; font-size: 1.75em; color: gray;">Drag and drop to add image</p>
+            </div>
+        <!-- </label> -->
+            </div>
+        <input type="submit" value="Upload" style = "margin-left: 45%;">
+        </form>
+    </div>
+
+<!-- 
+    <div class="outer" id="outer">
+        <form action="/addimages" method="POST" enctype="multipart/form-data" id="uploadForm">
+            <label for="inputfile" class="droparea" id="droparea">
+                <div class="imageview" id="imageview">
+                    <img src="imgindiv.png" height="50%" width="20%" style="margin: 30px;">
+                    <p style="background-color: white; font-size: 1.75em; color: gray;">Drag and drop to add image</p>
+                </div>
+                <input type="file" accept="image/*" id="inputfile" name="image" style="display: none;">
+            </label>
+            <input type="submit" value="Upload" onclick="document.getElementById('uploadForm').submit();">
+        </form>
+    </div> -->
+    
+    
+    <script>
+        const dropArea = document.getElementById("droparea");
+        const imageview = document.getElementById("imageview");
+        const input = document.getElementById("file");
+
+        input.addEventListener("change",uploadimages);
+
+        function uploadimages(){
+            let imglink = URL.createObjectURL(input.files[0]);
+            imageview.style.backgroundImage = `url(${imglink})`;
+            imageview.textContent = "";
+            imageview.style.border = 0;
+        }
+        dropArea.addEventListener("dragover", function(e){
+            e.preventDefault();
+        });
+        dropArea.addEventListener("drop", function(e){
+            e.preventDefault();
+            input.files = e.dataTransfer.files;
+            uploadimages();
+        });
+    </script>
+</body>
+</html>

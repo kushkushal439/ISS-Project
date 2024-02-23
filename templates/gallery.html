@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/gallery.css') }}">
+    <link href="https://fonts.googleapis.com/css?family=Ubuntu:300,300italic,regular,italic,500,500italic,700,700italic" rel="stylesheet" />
+</head>
+<body>
+    <div class="back"><a href = "intro.html"> back</a></div>
+    <h1> Welcome to Gallery</h1>
+    <div class="showpics">
+        {% for image in images %}
+        <img src="{{ url_for('static', filename = image) }}" alt="saiufvas" max-height="10vh">
+        {% endfor %}
+    </div>
+</body>
+</html>

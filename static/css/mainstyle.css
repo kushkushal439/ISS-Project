@@ -48,7 +48,7 @@ audio{
     display: flex;
     flex-direction: column;
     background-color: rgb(14, 14, 14);
-    overflow-x: auto;
+    overflow-y: auto;
 }
 
 .upperspecs {
