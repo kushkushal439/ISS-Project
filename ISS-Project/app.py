@@ -16,6 +16,7 @@ import requests
 from PIL import Image
 import binascii
 import io
+from moviepy.editor import ImageSequenceClip, concatenate_videoclips
 import psycopg2
 
 
@@ -139,6 +140,56 @@ def main():
     images = [f for f in os.listdir(finaloutdir) if os.path.isfile(os.path.join(finaloutdir, f))]
     image_paths = [os.path.join('selected', img) for img in images]
     return render_template("main.html", images = image_paths)
+
+
+
+
+@app.route('/create_video',methods=['POST','GET','DELETE'])
+# @jwt_required()
+def create_video():
+   data = request.get_json()  # Get the JSON data sent from the client
+   # data = request.args.get('images-container')
+   str = 'None'
+   print('Hello')
+   # print(data)
+   print("HEllo")
+   clips = []
+   for item in data:
+       if item is not None:
+           print(item)
+           image_path = os.path.join(app.root_path, item['image_path'])
+           duration = float(item['duration'])
+           transition = item['transition']
+
+           clip = ImageSequenceClip([image_path], durations=[duration])
+
+           if transition == 'fade':
+               clip = clip.crossfadein(1)
+               print("Cross")
+           elif transition == 'slide':
+               # Implement slide transition here
+               pass
+
+           clips.append(clip)
+   final_clip = concatenate_videoclips(clips, method="compose")
+
+
+   output_file_path = "static/video/output.mp4"
+   video_dir = "static/video"
+
+   # Check if the file exists and delete it
+   if os.path.isfile(output_file_path):
+       os.remove(output_file_path)
+
+   # Check if the directory exists
+   if not os.path.exists(video_dir):
+       # If the directory doesn't exist, create it
+       os.makedirs(video_dir)
+
+   final_clip.write_videofile(output_file_path, fps=24)
+   video_url = "/static/video/output.mp4"
+   return jsonify({'message': 'Video created successfully', 'newVideoUrl': video_url}), 200
+
 
 
     
@@ -274,7 +325,8 @@ def usrimagelist():
             shutil.copy(input_path,output_path)
         images = [f for f in os.listdir(finaloutdir) if os.path.isfile(os.path.join(finaloutdir, f))]
         image_paths = [os.path.join('selected', img) for img in images]
-        return render_template("main.html", images = image_paths)
+        # return render_template("main.html", images = image_paths)
+        return redirect(url_for('main'))
         # return render_template("gallery.html")
     userid = int(get_jwt_identity())
     sql = "SELECT user_id, img_id, image_data FROM images WHERE images.user_id = %s"
@@ -322,7 +374,7 @@ def usrimagelist():
 @app.route("/logout", methods=["POST"])
 @jwt_required()
 def logout():
-    response = jsonify({"msg": "logout successful"})
+    response = make_response(render_template('login.html'))
     unset_jwt_cookies(response)
     shutil.rmtree('static/images')
     if os.path.exists('static/selected'): shutil.rmtree('static/selected')

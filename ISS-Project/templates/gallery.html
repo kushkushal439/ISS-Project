@@ -55,11 +55,13 @@
     <title>Document</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/gallery.css')}}">
     <!-- <link rel="stylesheet" href="gallerypract.css"> -->
+    <link href="https://fonts.googleapis.com/css?family=Boogaloo:regular" rel="stylesheet" />
+<link href="https://fonts.googleapis.com/css?family=Commissioner:100,200,300,regular,500,600,700,800,900" rel="stylesheet" />
 </head>
 <body style = "background-color: black;">
-    <!-- <h2 style="color: white;">View your Images </h1> -->
     <form id="imageForm" name = "imageForm" action="/gallery" method="POST">
         <div class="box">
+            <h1 style="color: white; text-align: center; font-family: Commissioner; margin-top: -20px;">View your Images </h1>
         <div class="showpics">
             {% for image in images %}
             <div class="image-container">
@@ -82,22 +84,27 @@
         <!-- <button type="submit" value="Submit">UPLOAD</button> -->
 
         <div class="box2">
-        <button class="c-button c-button--gooey" type = "submit" value = "Submit"> UPLOAD
-            <div class="c-button__blobs">
-            <div></div>
-            <div></div>
-            <div></div>
+            <div>
+                <button class="c-button c-button--gooey" type = "submit" value = "Submit"> UPLOAD
+                    <div class="c-button__blobs">
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    </div>
+                </button>
+                <svg xmlns="http://www.w3.org/2000/svg" version="1.1" style="display: block; height: 0; width: 0;">
+                    <defs>
+                    <filter id="goo">
+                        <feGaussianBlur in="SourceGraphic" stdDeviation="10" result="blur"></feGaussianBlur>
+                        <feColorMatrix in="blur" mode="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 18 -7" result="goo"></feColorMatrix>
+                        <feBlend in="SourceGraphic" in2="goo"></feBlend>
+                    </filter>
+                    </defs>
+                </svg>
             </div>
-          </button>
-          <svg xmlns="http://www.w3.org/2000/svg" version="1.1" style="display: block; height: 0; width: 0;">
-            <defs>
-              <filter id="goo">
-                <feGaussianBlur in="SourceGraphic" stdDeviation="10" result="blur"></feGaussianBlur>
-                <feColorMatrix in="blur" mode="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 18 -7" result="goo"></feColorMatrix>
-                <feBlend in="SourceGraphic" in2="goo"></feBlend>
-              </filter>
-            </defs>
-          </svg>
+            <div class="right">
+                <a href = "">Upload more images</a>
+            </div>
 
         </div>
         
