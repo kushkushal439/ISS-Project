@@ -109,47 +109,47 @@ def intro():
    try:
         current_user = get_jwt_identity()
         return render_template('intro.html')
-        userid = current_user
-        sql = "SELECT user_id, img_id, image_data FROM images WHERE images.user_id = %s"
-        cursor.execute(sql,(userid,))
-        data = cursor.fetchall()
-        iter = 0
-        for i in data:
-            iter = i[1]
-            name = "img" + str(iter) + ".jpg"
-            output_path = os.path.join(output_dir,name)
-            img1 = Image.open(io.BytesIO(i[2]))
+        # userid = current_user
+        # sql = "SELECT user_id, img_id, image_data FROM images WHERE images.user_id = %s"
+        # cursor.execute(sql,(userid,))
+        # data = cursor.fetchall()
+        # iter = 0
+        # for i in data:
+        #     iter = i[1]
+        #     name = "img" + str(iter) + ".jpg"
+        #     output_path = os.path.join(output_dir,name)
+        #     img1 = Image.open(io.BytesIO(i[2]))
 
-            if img1.mode == 'RGBA':
-                img1 = img1.convert('RGB')
-            img1.save(output_path)
+        #     if img1.mode == 'RGBA':
+        #         img1 = img1.convert('RGB')
+        #     img1.save(output_path)
 
-        finaloutdir = "static/selected"
-        if os.path.exists('static/selected'): shutil.rmtree('static/selected')
-        if not os.path.exists(finaloutdir):
-            print("Entered entered entered")
-            os.makedirs(finaloutdir)
-        images = [f for f in os.listdir(output_dir) if os.path.isfile(os.path.join(output_dir, f))]
-        image_paths = [os.path.join('images', img) for img in images]
-        tokeep = 1
-        sql = "SELECT user_id, img_id, chosen FROM images WHERE images.user_id = %s and chosen = %s"
-        cursor.execute(sql,(userid,tokeep))
-        data = cursor.fetchall()
-        numbers1= []
-        for i in data:
-            numbers1.append(int(i[1]))
-        finaloutdir = "static/selected"
-        images1 = []
-        if not os.path.exists(finaloutdir):
-            os.makedirs(finaloutdir)
-        for num in numbers1:
-            name = 'img'
-            name += str(num)
-            name += '.jpg'
-            input_path = os.path.join(output_dir,name)
-            output_path = os.path.join(finaloutdir,name)
-            shutil.copy(input_path,output_path)
-        return render_template('intro.html')
+        # finaloutdir = "static/selected"
+        # if os.path.exists('static/selected'): shutil.rmtree('static/selected')
+        # if not os.path.exists(finaloutdir):
+        #     print("Entered entered entered")
+        #     os.makedirs(finaloutdir)
+        # images = [f for f in os.listdir(output_dir) if os.path.isfile(os.path.join(output_dir, f))]
+        # image_paths = [os.path.join('images', img) for img in images]
+        # tokeep = 1
+        # sql = "SELECT user_id, img_id, chosen FROM images WHERE images.user_id = %s and chosen = %s"
+        # cursor.execute(sql,(userid,tokeep))
+        # data = cursor.fetchall()
+        # numbers1= []
+        # for i in data:
+        #     numbers1.append(int(i[1]))
+        # finaloutdir = "static/selected"
+        # images1 = []
+        # if not os.path.exists(finaloutdir):
+        #     os.makedirs(finaloutdir)
+        # for num in numbers1:
+        #     name = 'img'
+        #     name += str(num)
+        #     name += '.jpg'
+        #     input_path = os.path.join(output_dir,name)
+        #     output_path = os.path.join(finaloutdir,name)
+        #     shutil.copy(input_path,output_path)
+        # return render_template('intro.html')
    except ExpiredSignatureError:
         # If token is expired, redirect to login page
         return redirect('/login')
