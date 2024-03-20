@@ -59,9 +59,37 @@
 <link href="https://fonts.googleapis.com/css?family=Commissioner:100,200,300,regular,500,600,700,800,900" rel="stylesheet" />
 </head>
 <body style = "background-color: black;">
+
+
+
+    <header class="header">
+        <h1 class="logo"><a href="{{url_for('intro')}}" style = "color: #ff0000;">Mahou</a></h1>
+          <ul class="main-nav">
+              <li><a href="{{url_for('main')}}">Brew your magic!</a></li>
+              <li><a href="{{url_for('usrimagelist')}}">Gallery</a></li>
+              <li><a href="{{url_for('addimage')}}">Upload Images</a></li>
+              <form id="logoutForm" action="{{url_for('logout')}}" method="POST">
+                <a href="#" onclick="document.getElementById('logoutForm').submit();" class="logsign">Logout</a>
+            </form>
+              <label class="burger" for="burger">
+                <input type="checkbox" id="burger">
+                <span></span>
+                <span></span>
+                <span></span>
+              </label>
+              <!-- <li><a href="#">Logout</a></li> -->
+          </ul>
+      </header> 
+
+
+
+
+
+
+
     <form id="imageForm" name = "imageForm" action="/gallery" method="POST">
         <div class="box">
-            <h1 style="color: white; text-align: center; font-family: Commissioner; margin-top: -20px;">View your Images </h1>
+            <h1 style="color: rgb(255, 0, 0); text-align: center; font-family: Commissioner; margin-top: -20px;">View your Images </h1>
         <div class="showpics">
             {% for image in images %}
             <div class="image-container">
@@ -101,9 +129,6 @@
                     </filter>
                     </defs>
                 </svg>
-            </div>
-            <div class="right">
-                <a href = "">Upload more images</a>
             </div>
 
         </div>
