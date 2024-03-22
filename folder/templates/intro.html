@@ -6,7 +6,7 @@
     <title>Intro Page</title>
     <link rel = "stylesheet" href = "{{ url_for('static', filename='css/intro.css')}}">
     <!-- <link rel="stylesheet" href="intro.css"> -->
-
+    <!-- <link rel="stylesheet" href="intro.css"> -->
 
 
 
@@ -50,16 +50,10 @@
               <li><a href="{{url_for('main')}}">Brew your magic!</a></li>
               <li><a href="{{url_for('usrimagelist')}}">Gallery</a></li>
               <li><a href="{{url_for('addimage')}}">Upload Images</a></li>
+              <li><a href="#"> Profile</a></li>
               <form id="logoutForm" action="{{url_for('logout')}}" method="POST">
                 <a href="#" onclick="document.getElementById('logoutForm').submit();" class="logsign">Logout</a>
-            </form>
-              <label class="burger" for="burger">
-                <input type="checkbox" id="burger">
-                <span></span>
-                <span></span>
-                <span></span>
-              </label>
-              <!-- <li><a href="#">Logout</a></li> -->
+             </form>
           </ul>
       </header> 
          
@@ -76,7 +70,7 @@
     <div id="right-side" class="side">
         <h2 class="title">
             Upload Photos,<br> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;create <span style="font-family: Water Brush,monospace,sans-serif;"class="right-name">Magic!</span>
-            <br>
+            <br><a href="main.html"><button class="button">Start Creating!</button></a>
         </h2>
     </div>
 
@@ -104,9 +98,9 @@
 
 
 
-    <!-- <script>
+    <script>
         const jwtToken = "{{ jwt_token }}";
-
+        let flag=0
         fetch('/intro', {
             method: 'GET',
             headers: {
@@ -126,6 +120,20 @@
             // Handle fetch error
             console.error('Fetch error:', error);
         });
-    </script> -->
+
+
+        function toggleravi() {
+            console.log(flag)
+            const now = document.getElementById("revi");
+            if(flag==1){
+                now.style.display = "none";
+                flag = 0;
+            }
+            else {
+                now.style.display = "inline-block";
+                flag = 1;
+            }
+        }
+    </script>
 </body>
 </html>

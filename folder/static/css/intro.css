@@ -67,6 +67,7 @@ color: #ff0000;
   padding-top: 8px;
 }
 .header {
+  z-index: 100000;
 padding-top: .5em;
 padding-bottom: .5em;
 background-color: #0000007a;
@@ -85,6 +86,7 @@ Dropdown
 ===============================*/
 
 .burger {
+
 margin-left: 30px;
 margin-right: 30px;
 position: relative;
@@ -205,22 +207,6 @@ Media Queries
   height:8vh;
 
  
-}
-
-.icon{
-  width:20vw;
- 
-}
-#options{
-  display:flex;
-  flex-direction: row;
-   margin-right: 10%;
-   width:50vw;
-   gap:30px;
-   justify-content: end;
-   color:white;
-
-
 }
 
 /* Style the links inside the navigation bar */
@@ -432,4 +418,16 @@ Media Queries
 
 .logsign:hover {
     padding-top: 1%;
+}
+
+
+.menu-links {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  background-color: white;
+  width: fit-content;
+  max-height: 0;
+  overflow: hidden;
+  transition: all 0.3s ease-in-out;
 }

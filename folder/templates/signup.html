@@ -20,11 +20,12 @@
     </div> -->
     <form action="/signup" method="POST">
     <input type="text" class="userinput" name = "username" id="username" placeholder="Username">
+    
     <input type="email" class="userinput" name="email" id="email" placeholder="Email">
     <input type="password" class="userinput" name="password" id="password" placeholder="Password">  
     <div class="btnouter"><button type = "submit" class="btn">SUBMIT</button></div>
     <div style="display:flex; justify-content:center ; align-items: center; opacity:70%; margin-top: 10px;">
-      <h3 style="color:white">Already experienced the magic??<a href="{{url_for('login')}}" style = "color: #ff0033;">Log-in</a></h3>
+      <h3 style="color:white">Already experienced the magic??&nbsp;<a href="{{url_for('login')}}" style = "color: #ff0033; text-decoration: none; font-weight: 900; font-size: 1.2em;">Log-in</a></h3>
       </div>
     </form>
   </div>
