@@ -1,9 +1,12 @@
 from flask import Flask, render_template, request, redirect, url_for,session, jsonify,make_response
 import json
 import shutil
+
+import mysql.connector
 from mysql.connector import Error
 import os
 from datetime import datetime,timedelta
+import jwt
 from flask_jwt_extended import JWTManager, jwt_required, create_access_token, get_jwt_identity, unset_access_cookies, set_access_cookies, unset_jwt_cookies
 
 from werkzeug.security import generate_password_hash, check_password_hash
@@ -11,12 +14,10 @@ from jwt.exceptions import DecodeError, ExpiredSignatureError, InvalidTokenError
 from functools import wraps
 import requests
 from PIL import Image
-# import binascii
+import binascii
 import io
-from moviepy.editor import ImageSequenceClip, concatenate_videoclips,ImageClip
+from moviepy.editor import ImageSequenceClip, concatenate_videoclips
 import psycopg2
-from moviepy.editor import CompositeVideoClip
-from transitions import slide_in, slide_out, crossfadein,crossfadeout
 
 
 
@@ -27,9 +28,8 @@ app.config['JWT_ACCESS_TOKEN_EXPIRES'] = timedelta(days=1)
 
 app.config['SECRET_KEY'] = 'secret'
 app.config['JWT_SECRET_KEY'] = 'key'
-app.config['JWT_TOKEN_LOCATION']=['cookies']
+app.config['JWT_TOKEN_LOCATION']=['headers','json','cookies','query_string']
 app.config["JWT_COOKIE_CSRF_PROTECT"] = False
-app.config['JWT_SESSION_COOKIE'] = False
 
 db = psycopg2.connect("postgresql://kushal:PpjAtagZofTf_1r7_5Yi7A@weisnoob-8900.8nk.gcp-asia-southeast1.cockroachlabs.cloud:26257/users?sslmode=verify-full")
 cursor = db.cursor()
@@ -84,7 +84,10 @@ def first():
     try:
         current_user = get_jwt_identity()
         if current_user:
-            return render_template('intro.html')
+            if current_user == -1:
+                return redirect(url_for('admin'))
+            else:
+                return render_template('intro.html')
         else:
             return redirect(url_for('login'))
     except ExpiredSignatureError:
@@ -172,31 +175,28 @@ def main():
 def create_video():
    data = request.get_json()  # Get the JSON data sent from the client
    # data = request.args.get('images-container')
-#    print('Hello')
+   str = 'None'
+   print('Hello')
    # print(data)
-#    print("HEllo")
-   print(data['resolution'])
-   resolutions = {'480p': (720, 480), '720p': (1280, 720), '1080p': (1920, 1080), '4k': (3840, 2160)}
-   resolution_choice = data['resolution']
+   print("HEllo")
    clips = []
-   for item in data['reorderedArray']:
+   for item in data:
        if item is not None:
            print(item)
            image_path = os.path.join(app.root_path, item['image_path'])
            duration = float(item['duration'])
            transition = item['transition']
-           clip = ImageClip(image_path).resize(resolutions[resolution_choice])
+
+           clip = ImageSequenceClip([image_path], durations=[duration])
 
            if transition == 'fade':
-               clip = clip.crossfadein(3)
+               clip = clip.crossfadein(1)
                print("Cross")
-           elif transition == 'slide_in':
+           elif transition == 'slide':
                # Implement slide transition here
-            #    clip = slide_in(clip, 3, "left")
-                clip = clip.fx(slide_in, 3, "left")
-                print("Slide")
+               pass
 
-           clips.append(clip.set_duration(duration))
+           clips.append(clip)
    final_clip = concatenate_videoclips(clips, method="compose")
 
 
@@ -217,19 +217,40 @@ def create_video():
    return jsonify({'message': 'Video created successfully', 'newVideoUrl': video_url}), 200
 
 
+@app.route('/admin',methods = ['GET'])
+def admin():
+    ret = []
+    qry = "select id, username, email from users"
+    cursor.execute(qry)
+    data = cursor.fetchall()
+    for i in data:
+        userid = i[0]
+        sql = "select count(%s) from images where user_id = %s"
+        cursor.execute(sql,(userid,userid))
+        num = cursor.fetchall()
+        new = []
+        new.append(i[0])
+        new.append(i[1])
+        new.append(i[2])
+        new.append(num[0][0])
+        ret.append(new)
+    return render_template('admin.html', list = ret)
 
-    
+
 @app.route('/login',methods=['GET','POST'])
-
 def login():
     if request.method=='POST':
             username = request.form['username']
             password = request.form['password']
+            if(username == "admin" and password == 'admin'):
+                access_token = create_access_token(identity=-1)
+                resp = make_response(redirect(url_for('admin')))
+                set_access_cookies(resp, access_token)
+                return resp
 
             cursor.execute("SELECT * FROM users WHERE username = %s", (username,))
             user_data = cursor.fetchone()
-           
-            
+
 
             if user_data:
                 user_id=user_data[0]
@@ -237,8 +258,6 @@ def login():
                 if check_password_hash(stored_password , password):
                                                          
                         access_token = create_access_token(identity=user_id)
-                      
-
                         resp = make_response(redirect(url_for('intro')))
                         set_access_cookies(resp, access_token)
                         userid = user_id
@@ -282,8 +301,7 @@ def login():
                             output_path = os.path.join(finaloutdir,name)
                             shutil.copy(input_path,output_path)
                         return resp
-                     
-
+                    
                 else:
                     return "Incorrect Password"
             else:
@@ -345,6 +363,33 @@ def addimage():
             return render_template('addimage.html')
     else:
         return  render_template('addimage.html')
+
+
+
+@app.route('/updatedb', methods = ['POST'])
+@jwt_required()
+def updatedb():
+    data = request.json
+    str = data.get('myString')
+    print(str)
+    parts = str.split('/')
+    last_part = parts[-1]    
+    number_str = last_part.replace('.jpg', '')   
+    number_str1 = number_str.replace('img', ''); 
+    num = number_str1
+    sql = "delete from images where img_id = %s"
+    print(num)
+    cursor.execute(sql,(num,))
+    db.commit()
+    rmdir = "static/"
+    rmdir += str
+    if os.path.exists(rmdir):
+        os.remove(rmdir)
+    rmdir1 = rmdir + 'selected/'  + last_part
+    if os.path.exists(rmdir1):
+        os.remove(rmdir1)
+    return jsonify({'message': 'String received successfully'})
+
 
 
 @app.route('/gallery', methods = ["GET","POST"])
@@ -419,22 +464,24 @@ def usrimagelist():
     userid = int(get_jwt_identity())
     cursor.execute(sql,(userid,tokeep))
     data = cursor.fetchall()
-    numbers1= []
-    for i in data:
-        numbers1.append(int(i[1]))
-    finaloutdir = "static/selected"
-    images1 = []
-    if not os.path.exists(finaloutdir):
-        os.makedirs(finaloutdir)
-    for num in numbers1:
-        name = 'img'
-        name += str(num)
-        name += '.jpg'
-        input_path = os.path.join(output_dir,name)
-        output_path = os.path.join(finaloutdir,name)
-        shutil.copy(input_path,output_path)
+    if data:
+        numbers1= []
+        for i in data:
+            numbers1.append(int(i[1]))
+        finaloutdir = "static/selected"
+        images1 = []
+        if not os.path.exists(finaloutdir):
+            os.makedirs(finaloutdir)
+        for num in numbers1:
+            name = 'img'
+            name += str(num)
+            name += '.jpg'
+            input_path = os.path.join(output_dir,name)
+            output_path = os.path.join(finaloutdir,name)
+            shutil.copy(input_path,output_path)
     images = [f for f in os.listdir(finaloutdir) if os.path.isfile(os.path.join(finaloutdir, f))]
     selected_images = [os.path.join('images', img) for img in images]
+    print(image_paths)
     return render_template('gallery.html', images = image_paths, selected_images = selected_images)
 
 

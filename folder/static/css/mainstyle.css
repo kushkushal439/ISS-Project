@@ -18,6 +18,24 @@ audio{
 
 
 
+
+::-webkit-scrollbar {
+    width: 12px;
+    margin-right: 6px;
+  }
+  
+  ::-webkit-scrollbar-track {
+    background-color: #0e0e0e;
+    border-radius: 100px;
+  }
+  
+::-webkit-scrollbar-thumb {
+    background-color: #404040;
+    border-radius: 100px;
+  }
+
+
+
 .header {
     background-color: black;
   }
@@ -194,10 +212,21 @@ audio{
     background-color: black;
     display: flex;
     flex-direction: row;
-    height: 75dvh;
+    height: 75vh;
     border: 1px solid black;
 }
 
+.goback {
+    color: red;
+    text-decoration: none;
+    padding: 1%;
+    transition: 0.2s;
+    width: 10%;
+}
+
+.goback:hover {
+    padding-top: 0.8%;
+}
 
 .vid {
     width: 70%;
@@ -218,8 +247,18 @@ audio{
 
 .upperspecs {
     padding: 2px;
+    height: 40%;
 }
 
+.addpics {
+    margin-top: 3%;
+    height: 45%;
+    margin-left: 1%;
+    margin-right: 1%;
+    background-color: rgb(49, 49, 49);
+    box-shadow: 4px 4px 4px black;
+    
+}
 
 .chmusic {
     margin-left: 1%;
@@ -319,9 +358,10 @@ audio{
 }
 
 
-/* #form-data {
+#form-data {
     display: none;
-} */
+}
+
 
 .lower-div {
     width: 100%;
@@ -344,12 +384,10 @@ audio{
     white-space: nowrap;
 }
 label{
-    /* max-width:20vw; */
-    max-height: 35dvh;
-    min-height: 35dvh;
-    margin-bottom: 1.5rem;
-    background-size: contain;
-    background-repeat: no-repeat;
+    max-width:20vw;
+    max-height: 30dvh;
+    min-height: 30dvh;
+    margin-bottom: 0;
 }
 img{
     width:100%;
@@ -361,113 +399,30 @@ img{
     gap:0;
     margin:0;
     padding: 0;
-    /* max-width: 15vw; */
+    max-width: 10vw;
     border-style: dotted;
     border:2px solid red;
-    padding:0.75%;
-    border-radius: 2%;
 }
-/* 
+
 .viewpics img {
     margin-top: 1%;
     margin-left: 1%;
     justify-content: center;
     max-height: 80%;
-} */
+}
 
 /* .viewpics::-webkit-scrollbar {
     display:inline;
 } */
 
 
-/* This is for the drop down in letting the user select resolution */
-@media (min-width: 768px) {
-  .radio-inputs {
-    position: relative;
-    display: flex;
-    flex-wrap: wrap;
-    border-radius: 0.5rem;
-    background-color: #EEE;
-    box-sizing: border-box;
-    box-shadow: 0 0 0px 1px rgba(0, 0, 0, 0.06);
-    padding: 0.25rem;
-    width: 20dvw;
-    height:8dvh;
-    font-size: 14px;
-  }
-  
-  .radio-inputs .radio {
-    flex: 1 1 auto;
-    text-align: center;
-  }
-  
-  .radio-inputs .radio input {
-    display: none;
-  }
-  
-  .radio-inputs .radio .name {
-    display: flex;
-    cursor: pointer;
-    align-items: center;
-    justify-content: center;
-    border-radius: 0.5rem;
-    border: none;
-    padding: .5rem 0;
-    color: rgba(51, 65, 85, 1);
-    transition: all .15s ease-in-out;
-  }
-  
-  .radio-inputs .radio input:checked + .name {
-    background-color: #fff;
-    font-weight: 600;
-  }
-}
 
-/* Resolution css ends here*/
 
-.spinner{
+.spinner-border {
     width: 3rem;
     height: 3rem;
     border-width: .3em;
-    position: absolute;
-    margin-top:3rem;
-    /* display: none; */
-    z-index: 1000;
   }
-  .loading svg polyline {
-    fill: none;
-    stroke-width: 3;
-    stroke-linecap: round;
-    stroke-linejoin: round;
-  }
-  
-  .loading svg polyline#back {
-    fill: none;
-    stroke: #ff4d5033;
-  }
-  
-  .loading svg polyline#front {
-    fill: none;
-    /* stroke: #ff4d4f; */
-    stroke:red;
-    stroke-dasharray: 48, 144;
-    stroke-dashoffset: 192;
-    animation: dash_682 1.4s linear infinite;
-  }
-  
-  @keyframes dash_682 {
-    72.5% {
-      opacity: 0;
-    }
-  
-    to {
-      stroke-dashoffset: 0;
-    }
-  }
-
-.sr-only{
-    color:red;
-}
 
   .cbutton {
     color: white;
@@ -480,9 +435,6 @@ img{
     background: none;
     font-weight: 600;
     font-family: 'Poppins', sans-serif;
-    position: absolute;
-    bottom: 20%;
-    /* right:10%; */
   }
   
   .cbutton::before {

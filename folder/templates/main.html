@@ -30,8 +30,6 @@
         $('#transition'+j).attr('id', 'transition' + imageName);
         console.log(data[i]);
     }
-
-    $('#spinner').hide();
    
     data.forEach(function(imageData) {
     var div = $('<div>')
@@ -50,21 +48,13 @@ $('.clip').children().on('dragover', function(event) {
     event.stopPropagation();
 });
 
-    // var label = $('<label>')
-    //     .attr('id', 'image' + imageData.name)
-    //     .addClass('image-label');
-    // var img = $('<img>')
-    //     .attr('src', imageData.image_path)
-        
-    // label.append(img);
     var label = $('<label>')
-    .attr('id', 'image' + imageData.name)
-    .addClass('image-label')
-    .css({
-        'background-image': 'url(' + imageData.image_path + ')',
-        'background-size': 'cover',
-        'background-position': 'center'
-    });
+        .attr('id', 'image' + imageData.name)
+        .addClass('image-label');
+    var img = $('<img>')
+        .attr('src', imageData.image_path)
+        
+    label.append(img);
     div.append(label);
 
     var duration = $('<input type="number">')
@@ -74,9 +64,8 @@ $('.clip').children().on('dragover', function(event) {
 
     var transition = $('<select id="transition' + imageData.name + '">')
         .append('<option value="none">None</option>')
-        .append('<option value="fade_in">Fade In</option>')
-        .append('<option value="slide_in">Slide In</option>')
-        .append('<option value="slide_out">Slide Out</option>');
+        .append('<option value="fade">Fade</option>')
+        .append('<option value="slide">Slide</option>');
     div.append(transition);
 
     var deleteButton = $('<button>Delete</button>');
@@ -94,8 +83,10 @@ $('.clip').children().on('dragover', function(event) {
 
 
 
-    $('#images-container').append(div);
+    $('form').append(div);
 });
+
+$('form').append('<button type="submit" class="cbutton">Create Magic!</button>');
 
 
 });
@@ -182,7 +173,7 @@ $(document).on('change', 'select[id^="transition"]',function() {
             $('#vid source').attr('src', '');
             $('#vid')[0].load();
 
-            $('#spinner').show();
+            $('#spinner').attr('style', 'display: block ');
             console.log('Spinner should be visible now');
 
             // var data = [];
@@ -207,10 +198,8 @@ $(document).on('change', 'select[id^="transition"]',function() {
         });
 
         // Convert the reordered array to a JSON string
-        var formData = JSON.stringify({
-            reorderedArray: reorderedArray,
-            resolution: $('#resolution input:checked').next('span').text()
-        });
+        var formData = JSON.stringify(reorderedArray);
+
 
             $.ajax({
                 url: "{{ url_for('create_video') }}",
@@ -238,16 +227,7 @@ $(document).on('change', 'select[id^="transition"]',function() {
             });
         });
     });
-/////////////////////////////////////////////////////////////////////////////////////////
-
-///////////////// Code to submit the main form///////////////////////////////////////
-$(document).ready(function(){
-    $("#choice-form").click(function(){
-        $("#images-container").submit(); // Submit the form
-    });
-});
-
-/////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////
 </script>
 
 <body>
@@ -275,17 +255,14 @@ $(document).ready(function(){
     <div class="upper-div">
         <div class="vid">
             <div style="color:aliceblue; margin-bottom:5vh;">
+                <a style="text-decoration: none ; color:white" href="intro.html">Back</a>
+                <h2>Video Preview</h2>
             </div>
             <!-- <div id="videoContainer"> -->
-                <div id="spinner" class="spinner" role="status">
-                    <div class="loading">
-                        <svg width="64px" height="48px">
-                            <polyline points="0.157 23.954, 14 23.954, 21.843 48, 43 0, 50 24, 64 24" id="back"></polyline>
-                          <polyline points="0.157 23.954, 14 23.954, 21.843 48, 43 0, 50 24, 64 24" id="front"></polyline>
-                        </svg>
-                      </div>
+                <div id="spinner" class="spinner-border" role="status" style="display: none;position: absolute; top: 50%; left: 50%;">
+                    <span class="sr-only">Loading...</span>
                 </div>
-                <video width="80%" height="80%" id="vid" controls>
+                <video width="60%" height="60%" id="vid" controls>
                     <source src="{{ url_for('static',filename='video/output.mp4')}}" type="video/mp4">
                 </video>
             <!-- </div> -->
@@ -305,39 +282,7 @@ $(document).ready(function(){
                     <source src="audio.ogg" type="audio/ogg">
                 </audio>
                 <br><br><br>
-                <!-- <form id="resolution">
-                    <select>
-                        <option>480p</option>
-                        <option>720p</option>
-                        <option>1080p</option>
-                        <option>4k</option>
-                    </select>
-                </form> -->
-                <!-- Here begins -->
-                <form id = "resolution" class="radio-inputs">
-                    <label class="radio">
-                      <input type="radio" name="radio" checked="">
-                      <span class="name">480p</span>
-                    </label>
-                    <label class="radio">
-                      <input type="radio" name="radio">
-                      <span class="name">720p</span>
-                    </label>
-                        
-                    <label class="radio">
-                      <input type="radio" name="radio">
-                      <span class="name">1080p</span>
-                    </label>
-                    <label class="radio">
-                        <input type="radio" name="radio">
-                        <span class="name">4k</span>
-                      </label>
-                </form>
-                <!--Here ends-->
-                <button type="submit" id="choice-form" class="cbutton">Create Magic!</button>
-    
            </div>
-        
          
     </div>
     <div class="lower-div">

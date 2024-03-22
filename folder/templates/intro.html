@@ -6,7 +6,7 @@
     <title>Intro Page</title>
     <link rel = "stylesheet" href = "{{ url_for('static', filename='css/intro.css')}}">
     <!-- <link rel="stylesheet" href="intro.css"> -->
-
+    <!-- <link rel="stylesheet" href="intro.css"> -->
 
 
 
@@ -17,35 +17,52 @@
     
 </head>
 <body>
-   
+    <!-- <div class="topnav">
+        <div class="icon" style="left:0">
+            <img src = "{{ url_for('static', filename='images/logo.png')}}">
+        </div>
+
+        <div id = "options">
+        <div>
+            <a href="login.html">Profile</a>
+        </div>
+        <div>
+            <form><a href="{{url_for('usrimagelist')}}">Gallery</a></form>
+        </div>
+        <div>
+            <a href="{{url_for('addimage')}}">Upload images</a>
+        </div>
+        <div>
+           
+            <form id="logoutForm" action="{{url_for('logout')}}" method="POST">
+                <a href="#" onclick="document.getElementById('logoutForm').submit();" class="logsign">Logout</a>
+            </form>
+
+        </div>
+       </div>
+    </div> -->
 
 
 
-     <header class="header">
+    <header class="header">
         <h1 class="logo"><a href="{{url_for('intro')}}" style = "color: #ff0000;">Mahou</a></h1>
           <ul class="main-nav">
               <li><a href="{{url_for('main')}}">Brew your magic!</a></li>
               <li><a href="{{url_for('usrimagelist')}}">Gallery</a></li>
               <li><a href="{{url_for('addimage')}}">Upload Images</a></li>
+              <li><a href="#"> Profile</a></li>
               <form id="logoutForm" action="{{url_for('logout')}}" method="POST">
                 <a href="#" onclick="document.getElementById('logoutForm').submit();" class="logsign">Logout</a>
-            </form>
-              <label class="burger" for="burger">
-                <input type="checkbox" id="burger">
-                <span></span>
-                <span></span>
-                <span></span>
-              </label>
-             
+             </form>
           </ul>
-      </header>   
+      </header> 
          
-    
+            
 
     <div id="left-side" class="side">
         <h2 class="title">
             Upload Photos, <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;create<span style="font-family: Water Brush,monospace,sans-serif;" class="left-name">&nbsp;Videos</span>
-            <br><a href="/main"><button class="button">Start Creating!</button></a>
+            <br><a href="main.html"><button class="button">Start Creating!</button></a>
         </h2>
        
     </div>
@@ -53,11 +70,13 @@
     <div id="right-side" class="side">
         <h2 class="title">
             Upload Photos,<br> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;create <span style="font-family: Water Brush,monospace,sans-serif;"class="right-name">Magic!</span>
-            <br><a href="/main"><button class="button">Start Creating!</button></a>
+            <br><a href="main.html"><button class="button">Start Creating!</button></a>
         </h2>
     </div>
 
-    <div id="dummy"></div> 
+    <div id="dummy">
+
+    </div>
     <script>
         const left = document.getElementById("left-side");
 
@@ -79,9 +98,9 @@
 
 
 
-    <!-- <script>
+    <script>
         const jwtToken = "{{ jwt_token }}";
-
+        let flag=0
         fetch('/intro', {
             method: 'GET',
             headers: {
@@ -101,6 +120,20 @@
             // Handle fetch error
             console.error('Fetch error:', error);
         });
-    </script> -->
+
+
+        function toggleravi() {
+            console.log(flag)
+            const now = document.getElementById("revi");
+            if(flag==1){
+                now.style.display = "none";
+                flag = 0;
+            }
+            else {
+                now.style.display = "inline-block";
+                flag = 1;
+            }
+        }
+    </script>
 </body>
 </html>

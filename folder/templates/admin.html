@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <!-- <link rel="stylesheet" href="admin.css"> -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/admin.css')}}">
+</head>
+<body>
+
+    <header class="header">
+        <h1 class="logo"><a href="{{url_for('admin')}}" style = "color: #ff0000;">Mahou</a></h1>
+          <ul class="main-nav">
+              <form id="logoutForm" action="{{url_for('logout')}}" method="POST">
+                <a href="#" onclick="document.getElementById('logoutForm').submit();" class="logsign">Logout</a>
+            </form>
+              <!-- <li><a href="#">Logout</a></li> -->
+          </ul>
+      </header> 
+
+
+    <br><br><br><br><br>
+    <div class="cards">
+            {% for i in list %}
+            <div class="card">
+                <div class="blob">
+                    <br><br>
+                    User-id:  {{ i[0] }} <br><br>
+                    Email-id: {{ i[2] }} <br><br>
+                    Number of images uploaded: {{ i[3] }} 
+                </div>
+                <span class="img"></span>
+                <h2 style="font-size: 1.5vw;">{{ i[1] }}</h2>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+
+
+    <br><br><br><br><br>
+</body>
+</html>
