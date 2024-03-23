@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Intro Page</title>
+    <link rel = "stylesheet" href = "{{ url_for('static', filename='css/intro.css')}}">
+    <!-- <link rel="stylesheet" href="intro.css"> -->
+
+
+
+
+    <link href="https://fonts.googleapis.com/css?family=Merriweather:300,300italic,regular,italic,700,700italic,900,900italic" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css?family=Water+Brush:regular" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css?family=Protest+Revolution:regular" rel="stylesheet" />
+     
+    
+</head>
+<body>
+   
+
+
+
+     <header class="header">
+        <h1 class="logo"><a href="{{url_for('intro')}}" style = "color: #ff0000;">Mahou</a></h1>
+          <ul class="main-nav">
+              <li><a href="{{url_for('main')}}">Brew your magic!</a></li>
+              <li><a href="{{url_for('usrimagelist')}}">Gallery</a></li>
+              <li><a href="{{url_for('addimage')}}">Upload Images</a></li>
+              <form id="logoutForm" action="{{url_for('logout')}}" method="POST">
+                <a href="#" onclick="document.getElementById('logoutForm').submit();" class="logsign">Logout</a>
+            </form>
+              <label class="burger" for="burger">
+                <input type="checkbox" id="burger">
+                <span></span>
+                <span></span>
+                <span></span>
+              </label>
+             
+          </ul>
+      </header>   
+         
+    
+
+    <div id="left-side" class="side">
+        <h2 class="title">
+            Upload Photos, <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;create<span style="font-family: Water Brush,monospace,sans-serif;" class="left-name">&nbsp;Videos</span>
+            <br><a href="/main"><button class="button">Start Creating!</button></a>
+        </h2>
+       
+    </div>
+
+    <div id="right-side" class="side">
+        <h2 class="title">
+            Upload Photos,<br> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;create <span style="font-family: Water Brush,monospace,sans-serif;"class="right-name">Magic!</span>
+            <br><a href="/main"><button class="button">Start Creating!</button></a>
+        </h2>
+    </div>
+
+    <div id="dummy"></div> 
+    <script>
+        const left = document.getElementById("left-side");
+
+        const handleMove = e => {
+            left.style.width = `${e.clientX / window.innerWidth * 100}%`;
+        }
+
+        document.onmousemove = e => handleMove(e);
+
+        document.ontouchmove = e => handleMove(e.touches[0]);
+    </script>
+    
+
+
+
+
+
+
+
+
+
+    <!-- <script>
+        const jwtToken = "{{ jwt_token }}";
+
+        fetch('/intro', {
+            method: 'GET',
+            headers: {
+                'Authorization': `Bearer ${jwtToken}`
+            }
+        })
+        .then(response => {
+            if (response.ok) {
+                // Handle successful response
+                console.log('Success');
+            } else {
+                // Handle error response
+                console.error('Error:', response.status);
+            }
+        })
+        .catch(error => {
+            // Handle fetch error
+            console.error('Fetch error:', error);
+        });
+    </script> -->
+</body>
+</html>

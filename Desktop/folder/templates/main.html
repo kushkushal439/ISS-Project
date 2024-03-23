@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Main Page</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/mainstyle.css') }}">
+</head>
+
+
+
+<!-- Script to send the form data to the server using AJAX: -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+<script>
+
+    var data = [];
+    const image_paths = JSON.parse('{{ images|tojson|safe }}');
+    console.log(image_paths)
+    $(document).ready(function() {
+    for (var i=0;i<image_paths.length;i++){
+        console.log('image path:', image_paths[i]);
+        var imageName = image_paths[i].match(/img(\d+)/)[1];
+        console.log(imageName)
+        data.push({image_path: 'static/' + image_paths[i] , name: imageName, duration:2 , transition:'none'});
+
+        let j = i+1
+        $('#duration'+j).attr('id', 'duration' + imageName);
+        $('#transition'+j).attr('id', 'transition' + imageName);
+        console.log(data[i]);
+    }
+
+    $('#spinner').hide();
+   
+    data.forEach(function(imageData) {
+    var div = $('<div>')
+        .attr('id', 'clip_'+imageData.name)
+        .attr('class','clip')
+        .attr('draggable', 'true')
+       
+//         .on('dragstart', function(event) {
+//             event.originalEvent.dataTransfer.setData('text/plain', imageData.name);
+//         });
+//         $('.clip').on('dragover', function(event) {
+//     console.log("dragbegun");
+//     event.preventDefault();
+// });
+$('.clip').children().on('dragover', function(event) {
+    event.stopPropagation();
+});
+
+    // var label = $('<label>')
+    //     .attr('id', 'image' + imageData.name)
+    //     .addClass('image-label');
+    // var img = $('<img>')
+    //     .attr('src', imageData.image_path)
+        
+    // label.append(img);
+    var label = $('<label>')
+    .attr('id', 'image' + imageData.name)
+    .addClass('image-label')
+    .css({
+        'background-image': 'url(' + imageData.image_path + ')',
+        'background-size': 'cover',
+        'background-position': 'center'
+    });
+    div.append(label);
+
+    var duration = $('<input type="number">')
+        .attr('placeholder', 'Duration in seconds')
+        .attr('id', 'duration' + imageData.name);
+    div.append(duration);
+
+    var transition = $('<select id="transition' + imageData.name + '">')
+        .append('<option value="none">None</option>')
+        .append('<option value="fade_in">Fade In</option>')
+        .append('<option value="slide_in">Slide In</option>')
+        .append('<option value="slide_out">Slide Out</option>');
+    div.append(transition);
+
+    var deleteButton = $('<button>Delete</button>');
+    deleteButton.click(function() {
+        // Remove the div from the DOM
+        div.remove();
+
+        // Remove the image from the data array
+        data = data.filter(function(item) {
+            return item.name !== imageData.name;
+        });
+        // console.log(data[0]);
+    });
+    div.append(deleteButton);
+
+
+
+    $('#images-container').append(div);
+});
+
+
+});
+
+
+
+/////////////////////////Code for reordering the images when the user drags and drops them
+$(function() {
+      $("#images-container").sortable({
+        update: function(e, ui) {
+          var order = $('#images-container').sortable('serialize');
+          console.log(order);
+        //   console.log(serialize)
+          //Ajax the data to the server
+          //$.get('sort.php', order, function(data, textStatus, xhr) {});
+        }
+      });
+      $("#images-container").disableSelection();
+    });
+/////////////////////////////////////////////////////////////////////////////////////////////
+ 
+
+
+///////////////Code for modifying the data array when the user changes the duration or transition of an image
+$(document).ready(function() {
+    $(document).on('change', 'input[id^="duration"]' ,function() {
+        // console.log('hello');
+        var name = this.id.replace('duration', '');
+        var item = data.find(function(d) { return d.name === name; });
+        console.log(item)
+        if (item) {
+            item.duration = $(this).val();
+            console.log(item);
+        }
+        else{
+            console.log("Eeerie");
+        }
+    });
+});
+
+$(document).ready(function() {
+$(document).on('change', 'select[id^="transition"]',function() {
+   
+    var name = this.id.replace('transition', '');
+        var item = data.find(function(d) { return d.name === name; });
+        console.log(item)
+        if (item) {
+            item.transition = $(this).val();
+            console.log(item);
+        }
+   
+});
+});
+/////////////////////////////////////////////////////////////////////////////////////////
+
+
+//Code to keep images in the same order as the user has arranged them
+// $('#images-container').sortable({
+//     update: function(event, ui) {
+//         // Get the new order of the images
+//         var newOrder = $(this).sortable('toArray', { attribute: 'data-name' });
+
+//         // Create a new data array that reflects this order
+//         var newData = newOrder.map(function(name) {
+//             return data.find(function(imageData) {
+//                 return imageData.name === name;
+//             });
+//         });
+
+//         // Replace the old data array with the new one
+//         consol.log(newData[0])
+//         data = newData;
+//     }
+// });
+/////////////////////////////////////////////////////////////////////////////////////////
+
+
+
+
+////Code for submission and implementing the loader when the video is being created////////
+    $(document).ready(function () {
+        $("form").on("submit", function (event) {
+            event.preventDefault();
+            $('#vid source').attr('src', '');
+            $('#vid')[0].load();
+
+            $('#spinner').show();
+            console.log('Spinner should be visible now');
+
+            // var data = [];
+            // // const image_paths = JSON.parse('{{ images|tojson|safe }}');
+            // var images = image_paths;
+            // for (var i = 0; i < images.length; i++) {
+            //     var duration = $("#duration" + (i + 1)).val();
+            //     var transition = $("#transition" + (i + 1)).val();
+            //     data.push({ image: images[i], duration: duration, transition: transition });
+            // }
+             // Get the current order of the images
+        var order = $('#images-container').sortable('toArray');
+
+        // Reorder the global array based on the order of the images
+        var reorderedArray = order.map(function (id) {
+            // Extract the number from the id
+            var number = id.replace('clip_', '');
+            // Find the corresponding item in the global array
+            return data.find(function (item) {
+                return item.name === number;
+            });
+        });
+
+        // Convert the reordered array to a JSON string
+        var formData = JSON.stringify({
+            reorderedArray: reorderedArray,
+            resolution: $('#resolution input:checked').next('span').text()
+        });
+
+            $.ajax({
+                url: "{{ url_for('create_video') }}",
+                type: "POST",
+                contentType: "application/json",
+                data: formData,
+             
+                success: function (response) {
+                    var newVideoUrl = response.newVideoUrl + '?t=' + new Date().getTime()
+                    // This is done to prevent browser form cahcing the old video by setting the unique time stamp everytime the video is updated
+                    //
+                    // Update the video source
+                    $('#vid source').attr('src', newVideoUrl);
+                    // Load the new video
+                    $('#vid')[0].load();
+                    // Handle the response from the server
+                    console.log('Success:', response);
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    console.log('Error:', textStatus, errorThrown);
+                },
+                complete: function () {
+                    $('#spinner').hide();
+                }
+            });
+        });
+    });
+/////////////////////////////////////////////////////////////////////////////////////////
+
+///////////////// Code to submit the main form///////////////////////////////////////
+$(document).ready(function(){
+    $("#choice-form").click(function(){
+        $("#images-container").submit(); // Submit the form
+    });
+});
+
+/////////////////////////////////////////////////////////////////////////////////////////
+</script>
+
+<body>
+
+    <header class="header">
+        <h1 class="logo"><a href="{{url_for('intro')}}" style = "color: #ff0000;">Mahou</a></h1>
+          <ul class="main-nav">
+              <li><a href="{{url_for('main')}}">Brew your magic!</a></li>
+              <li><a href="{{url_for('usrimagelist')}}">Gallery</a></li>
+              <li><a href="{{url_for('addimage')}}">Upload Images</a></li>
+              <!-- <form id="logoutForm" action="{{url_for('logout')}}" method="POST">
+                <a href="#" onclick="document.getElementById('logoutForm').submit();">Logout</a>
+            </form> -->
+              <!-- <label class="burger" for="burger">
+                <input type="checkbox" id="burger">
+                <span></span>
+                <span></span>
+                <span></span>
+              </label> -->
+          </ul>
+      </header> 
+
+
+
+    <div class="upper-div">
+        <div class="vid">
+            <div style="color:aliceblue; margin-bottom:5vh;">
+            </div>
+            <!-- <div id="videoContainer"> -->
+                <div id="spinner" class="spinner" role="status">
+                    <div class="loading">
+                        <svg width="64px" height="48px">
+                            <polyline points="0.157 23.954, 14 23.954, 21.843 48, 43 0, 50 24, 64 24" id="back"></polyline>
+                          <polyline points="0.157 23.954, 14 23.954, 21.843 48, 43 0, 50 24, 64 24" id="front"></polyline>
+                        </svg>
+                      </div>
+                </div>
+                <video width="80%" height="80%" id="vid" controls>
+                    <source src="{{ url_for('static',filename='video/output.mp4')}}" type="video/mp4">
+                </video>
+            <!-- </div> -->
+        </div>
+        
+            <div class="upperspecs">
+                <div class="chmusic">
+                    <label>Choose Background Music: </label>
+                    <select>
+                        <option>Happy Birthday</option>
+                        <option>Rick roll</option>
+                        <option>Yaari</option>
+                    </select>
+                </div>
+
+                <audio height="1vh" controls style="margin-top: 2em;">
+                    <source src="audio.ogg" type="audio/ogg">
+                </audio>
+                <br><br><br>
+                <!-- <form id="resolution">
+                    <select>
+                        <option>480p</option>
+                        <option>720p</option>
+                        <option>1080p</option>
+                        <option>4k</option>
+                    </select>
+                </form> -->
+                <!-- Here begins -->
+                <form id = "resolution" class="radio-inputs">
+                    <label class="radio">
+                      <input type="radio" name="radio" checked="">
+                      <span class="name">480p</span>
+                    </label>
+                    <label class="radio">
+                      <input type="radio" name="radio">
+                      <span class="name">720p</span>
+                    </label>
+                        
+                    <label class="radio">
+                      <input type="radio" name="radio">
+                      <span class="name">1080p</span>
+                    </label>
+                    <label class="radio">
+                        <input type="radio" name="radio">
+                        <span class="name">4k</span>
+                      </label>
+                </form>
+                <!--Here ends-->
+                <button type="submit" id="choice-form" class="cbutton">Create Magic!</button>
+    
+           </div>
+        
+         
+    </div>
+    <div class="lower-div">
+        <div class="viewpics">
+        <form id="images-container"></form>
+        </div>
+    </div>
+</body>
+
+</html>
