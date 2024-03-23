@@ -1,0 +1,503 @@
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: black;
+    color: white;
+    font-family: sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+audio{
+    height: 5vh;
+}
+
+
+
+.header {
+    background-color: black;
+  }
+  ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  }
+  
+  a {
+  text-decoration: none;
+  }
+  
+  .logo {
+  margin: 0;
+  font-size: 1.45em;
+  transition: 0.2s;
+  }
+  
+  .logo a:hover {
+  
+      text-shadow: 0px 0px 10px #ff0000;
+      font-weight: 800;
+  
+    }
+  
+  
+  
+  .main-nav {
+  margin-top: 5px;
+  background-color: rgb(0, 0, 0);
+  }
+  .logo a,
+  .main-nav a {
+  padding: 10px 15px;
+  text-transform: uppercase;
+  text-align: center;
+  display: block;
+    transition: 0.2s;
+  }
+  
+  .main-nav a {
+  color: #ff0000;
+  font-size: .99em;
+  }
+  
+  .main-nav a:hover {
+  color: #ff0000;
+    padding-top: 8px;
+  }
+  .header {
+  padding-top: .5em;
+  padding-bottom: .5em;
+  background-color: #0000007a;
+  -webkit-box-shadow: 0px 0px 14px 0px rgba(0,0,0,0.75);
+  -moz-box-shadow: 0px 0px 14px 0px rgba(0,0,0,0.75);
+  box-shadow: 0px 0px 14px 0px rgba(0,0,0,0.75);
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  border-radius: 5px;
+  }
+  
+  
+  
+  /* =============================
+  Dropdown
+  ===============================*/
+  
+  .burger {
+  margin-left: 30px;
+  margin-right: 30px;
+  position: relative;
+  width: 40px;
+  height: 30px;
+  background: transparent;
+  cursor: pointer;
+  display: block;
+  }
+  
+  .burger input {
+  display: none;
+  }
+  
+  .burger span {
+  display: block;
+  position: absolute;
+  height: 4px;
+  width: 100%;
+  background: #ff0000;
+  border-radius: 9px;
+  opacity: 1;
+  left: 0;
+  transform: rotate(0deg);
+  transition: .25s ease-in-out;
+  }
+  
+  .burger span:nth-of-type(1) {
+  top: 0px;
+  transform-origin: left center;
+  }
+  
+  .burger span:nth-of-type(2) {
+  top: 50%;
+  transform: translateY(-50%);
+  transform-origin: left center;
+  }
+  
+  .burger span:nth-of-type(3) {
+  top: 100%;
+  transform-origin: left center;
+  transform: translateY(-100%);
+  }
+  
+  .burger input:checked ~ span:nth-of-type(1) {
+  transform: rotate(45deg);
+  top: 0px;
+  left: 5px;
+  }
+  
+  .burger input:checked ~ span:nth-of-type(2) {
+  width: 0%;
+  opacity: 0;
+  }
+  
+  .burger input:checked ~ span:nth-of-type(3) {
+  transform: rotate(-45deg);
+  top: 28px;
+  left: 5px;
+  }
+  
+  
+  
+  
+  
+  
+  /* ================================= 
+  Media Queries
+  ==================================== */
+  
+  
+  
+  
+  @media (min-width: 769px) {
+  .header,
+  .main-nav {
+    display: flex;
+  }
+  .header {
+    flex-direction: column;
+    align-items: center;
+      .header{
+    width: 80%;
+    margin: 0 auto;
+    max-width: 1150px;
+  }
+  }
+  
+  }
+  
+  @media (min-width: 1025px) {
+  .header {
+    flex-direction: row;
+    justify-content: space-between;
+  }
+  
+  
+  }
+  
+
+
+
+
+.upper-div {
+    background-color: black;
+    display: flex;
+    flex-direction: row;
+    height: 75dvh;
+    border: 1px solid black;
+}
+
+
+.vid {
+    width: 70%;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+    background-color: rgb(9, 9, 9);
+}
+
+.specs {
+    width: calc(100% - 70%);
+    display: flex;
+    flex-direction: column;
+    background-color: rgb(14, 14, 14);
+    overflow-y: auto;
+}
+
+.upperspecs {
+    padding: 2px;
+}
+
+
+.chmusic {
+    margin-left: 1%;
+    margin-right: 1%;
+    margin-top: 1%;
+ 
+}
+
+
+.music {
+    margin-left: 1%;
+    margin-right: 1%;
+    margin-top: 2%;
+    height: 15%;
+    border: 1px solid black;
+    background-color: rgb(180, 180, 51);
+    padding-top:2%;
+    padding-left: 1%;
+    display:flex;
+    
+}
+
+.lowerspecs {
+    height: 60%;
+  
+}
+
+.specname {
+    padding-top: 2%;
+    padding-left: 1%;
+    color: rgb(255, 255, 255);
+    font-size: 2em;
+    height: 15%;
+    display:flex;
+    justify-content:left;
+    align-items:center;
+}
+
+.options {
+    height: 85%;
+ 
+}
+
+.duration {
+    height: 33%; 
+    display:flex;
+    justify-content: left;
+    align-items:center;
+    padding-left: 2%;
+}
+
+.durinput {
+    color: rgb(255, 255, 255);
+    width: 10%;
+    background-color: black;
+    border: .1px solid  white;
+    margin-top: 1%;
+}
+
+.resolution {
+  
+    height: 33%;
+    display: flex;
+    flex-direction: row;
+    justify-content:left;
+    align-items:center;
+}
+
+
+.resdrop {
+    width: 40%;
+    margin-top: 5.5%;
+    height: 45%;
+}
+
+
+.transition {
+ 
+    height: 33%;
+    display: flex;
+    flex-direction: row;
+    justify-content: left;
+    align-items:center;
+}
+
+
+.dropdown select{
+    color: white;
+}
+
+.dropdown select option {
+    color: white;
+}
+
+.selecter {
+    background-color: black;
+}
+
+
+/* #form-data {
+    display: none;
+} */
+
+.lower-div {
+    width: 100%;
+    border: 0.001px solid black;
+    background-color: rgb(36, 36, 36);
+    /* height: calc(100vh - 50vh); */
+}
+
+.lower-div form{
+    display: flex;
+    gap:3px;
+}
+
+.lower-div .viewpics {
+    background-color: rgb(0, 0, 0);
+    margin: 1%;
+    height: 100%;
+    overflow-y: auto;
+    overflow-x: auto;
+    white-space: nowrap;
+}
+label{
+    /* max-width:20vw; */
+    max-height: 35dvh;
+    min-height: 35dvh;
+    margin-bottom: 1.5rem;
+    background-size: contain;
+    background-repeat: no-repeat;
+}
+img{
+    width:100%;
+    height:100%;
+}
+.clip{
+    display: flex;
+    flex-direction: column;
+    gap:0;
+    margin:0;
+    padding: 0;
+    /* max-width: 15vw; */
+    border-style: dotted;
+    border:2px solid red;
+    padding:0.75%;
+    border-radius: 2%;
+}
+/* 
+.viewpics img {
+    margin-top: 1%;
+    margin-left: 1%;
+    justify-content: center;
+    max-height: 80%;
+} */
+
+/* .viewpics::-webkit-scrollbar {
+    display:inline;
+} */
+
+
+/* This is for the drop down in letting the user select resolution */
+@media (min-width: 768px) {
+  .radio-inputs {
+    position: relative;
+    display: flex;
+    flex-wrap: wrap;
+    border-radius: 0.5rem;
+    background-color: #EEE;
+    box-sizing: border-box;
+    box-shadow: 0 0 0px 1px rgba(0, 0, 0, 0.06);
+    padding: 0.25rem;
+    width: 20dvw;
+    height:8dvh;
+    font-size: 14px;
+  }
+  
+  .radio-inputs .radio {
+    flex: 1 1 auto;
+    text-align: center;
+  }
+  
+  .radio-inputs .radio input {
+    display: none;
+  }
+  
+  .radio-inputs .radio .name {
+    display: flex;
+    cursor: pointer;
+    align-items: center;
+    justify-content: center;
+    border-radius: 0.5rem;
+    border: none;
+    padding: .5rem 0;
+    color: rgba(51, 65, 85, 1);
+    transition: all .15s ease-in-out;
+  }
+  
+  .radio-inputs .radio input:checked + .name {
+    background-color: #fff;
+    font-weight: 600;
+  }
+}
+
+/* Resolution css ends here*/
+
+.spinner{
+    width: 3rem;
+    height: 3rem;
+    border-width: .3em;
+    position: absolute;
+    margin-top:3rem;
+    /* display: none; */
+    z-index: 1000;
+  }
+  .loading svg polyline {
+    fill: none;
+    stroke-width: 3;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+  
+  .loading svg polyline#back {
+    fill: none;
+    stroke: #ff4d5033;
+  }
+  
+  .loading svg polyline#front {
+    fill: none;
+    /* stroke: #ff4d4f; */
+    stroke:red;
+    stroke-dasharray: 48, 144;
+    stroke-dashoffset: 192;
+    animation: dash_682 1.4s linear infinite;
+  }
+  
+  @keyframes dash_682 {
+    72.5% {
+      opacity: 0;
+    }
+  
+    to {
+      stroke-dashoffset: 0;
+    }
+  }
+
+.sr-only{
+    color:red;
+}
+
+  .cbutton {
+    color: white;
+    cursor: pointer;
+    height: fit-content;
+    margin-top: 5%;
+    text-decoration: none;
+    font-size: 25px;
+    border: none;
+    background: none;
+    font-weight: 600;
+    font-family: 'Poppins', sans-serif;
+    position: absolute;
+    bottom: 20%;
+    /* right:10%; */
+  }
+  
+  .cbutton::before {
+    margin-left: auto;
+  }
+  
+  .cbutton::after, button::before {
+    content: '';
+    width: 0%;
+    height: 2px;
+    background: #f44336;
+    display: block;
+    transition: 0.5s;
+  }
+  
+  .cbutton:hover::after, button:hover::before {
+    width: 100%;
+  }

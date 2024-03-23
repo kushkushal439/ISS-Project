@@ -1,0 +1,259 @@
+<!-- <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            font-family: sans-serif;
+            box-sizing: border-box;
+            background-color: gray;
+        }
+        .outer {
+            margin-top: 11%;
+            justify-content: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        #droparea {
+            background-color: rgb(255, 255, 255);
+            width: 50vw;
+            height: 40vh;
+            padding: 30px;
+            text-align: center;
+            border-radius: 20px;
+        }
+        .imageview{
+            background-color: white;
+            width: 100%;
+            height: 100%;
+            border-radius: 20px;
+            border: 2px dashed rgb(119, 119, 119);
+        }
+
+        input[type="submit"] {
+        background-color: #4CAF50;
+        color: white;
+        padding: 14px 20px;
+        margin: 8px 0;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        display: inline-block;
+        }
+
+    </style>
+</head>
+<body>
+    <div class="outer" id = "outer">
+        <form action   ="/addimages" method="POST" enctype="multipart/form-data">
+            <div class="droparea" id = "droparea">
+            <input type="file" multiple accept = "image/*" id = "file" name = "file" style = "background-color: white;">
+            <div class="imageview" id = "imageview">
+                <img src="imgindiv.png" height="50%" width="20%" style = "margin: 30px; display: inline-block;">
+                <p style = "background-color: white; font-size: 1.75em; color: gray;">Drag and drop to add image</p>
+            </div>
+            </div>
+        <input type="submit" value="Upload" style = "margin-left: 45%;">
+        </form>
+    </div>
+    
+    
+    <script>
+        const dropArea = document.getElementById("droparea");
+        const imageview = document.getElementById("imageview");
+        const input = document.getElementById("file");
+
+        input.addEventListener("change",uploadimages);
+
+        function uploadimages(){
+            let imglink = URL.createObjectURL(input.files[0]);
+            imageview.style.backgroundImage = `url(${imglink})`;
+            imageview.textContent = "";
+            imageview.style.border = 0;
+        }
+        dropArea.addEventListener("dragover", function(e){
+            e.preventDefault();
+        });
+        dropArea.addEventListener("drop", function(e){
+            e.preventDefault();
+            input.files = e.dataTransfer.files;
+            uploadimages();
+        });
+    </script>
+</body>
+</html> -->
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Upload page</title>
+    <!-- <link rel="stylesheet" href="upload.css"> -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/upload.css')}}">
+</head>
+<body>
+
+    <header class="header">
+        <h1 class="logo"><a href="#" style = "color: #ff0000;">Mahou</a></h1>
+          <ul class="main-nav">
+              <li><a href="{{url_for('main')}}">Brew your magic!</a></li>
+              <li><a href="{{url_for('usrimagelist')}}">Gallery</a></li>
+              <li><a href="{{url_for('addimage')}}">Upload Images</a></li>
+              <form id="logoutForm" action="{{url_for('logout')}}" method="POST">
+                <a href="#" onclick="document.getElementById('logoutForm').submit();" class="logsign">Logout</a>
+            </form>
+              <label class="burger" for="burger">
+                <input type="checkbox" id="burger">
+                <span></span>
+                <span></span>
+                <span></span>
+              </label>
+              <!-- <li><a href="#">Logout</a></li> -->
+          </ul>
+      </header> 
+
+
+
+    <div class="box">
+        <div class="box1">
+            <form id = "form" action ="/addimages" method="POST" enctype="multipart/form-data">
+                <input type= "file"  accept = "image/*" name="file" id="file" multiple onchange="loadFiles(event)" style="display: none;">
+                <label for="file" style = "cursor: pointer; height: fit-content;">   
+                    <div class = "outerbox" id = "outerbox">
+                        <div class="inner" id = "inner">
+                            <img src="{{ url_for('static', filename='usingimg/dragdropbox.png') }}" alt="drag" style = "filter: invert(70%); max-width: 50px;margin-left: 34%; margin-bottom: 12px;">
+                            <!-- <img src="{{ url_for('static', filename='usingimg/cheat.jpg') }}" alt="drag" style = "max-width: 50px;margin-left: 34%; margin-bottom: 12px;"> -->
+                            <br>Drag your image here<br> &nbsp; &nbsp; &nbsp;or choose file
+                        </div>
+                    </div>
+                </label>
+                <div class="forbut">
+                    <button class = "buttons" id = "buttons">Submit</button>
+                </div>
+            </form>
+                <!-- <button class = "buttons" onclick="submitImages()"> Checker</button> -->
+            </div>
+        <div class="box2">
+            <div class="heading">View pics to upload</div>
+            <div class="image-container" id = "image-container">
+            </div>
+            <br><br><br><br>
+        </div>
+    </div>
+
+    <script>
+        const droparea = document.getElementById("outerbox");
+        const input = document.getElementById("file");
+        const imgs = []
+
+
+        droparea.addEventListener("dragover", function(e){
+            console.log("Hey dragged over");
+            e.preventDefault();
+        });
+
+        droparea.addEventListener("drop", function(e){
+            e.preventDefault();
+            console.log("Dropped");
+            const files = e.dataTransfer.files;
+            for(let i = 0;i<files.length;i++) {
+                displayandstore(files[i]);
+            }
+        });
+
+
+        function loadFiles(event) {
+            console.log("Hey");
+            var files = event.target.files;
+            var container = document.getElementById('image-container');
+            for(let i = 0;i<files.length;i++) {
+                displayandstore(files[i]);
+            }
+        }
+
+        function displayandstore(file) {
+            const container = document.getElementById("image-container");
+            var image = document.createElement('img');
+            image.src = URL.createObjectURL(file);
+            container.appendChild(image);
+            storeimage(file);
+        }
+
+        function storeimage(file){
+            imgs.push(file);
+        }
+
+        // function display() {
+        //     const container = document.getElementById("image-container");
+        //     for(let i = 0;i<imgs.length;i++) {
+        //         var image = document.createElement('img');
+        //         image.src = URL.createObjectURL(imgs[i]);
+        //         container.appendChild(image);
+        //     }
+        // }
+
+        document.getElementById("form").addEventListener("submit", function(e) {
+            e.preventDefault();
+            var form = document.getElementById("form");
+            var data = new FormData();
+            console.log(imgs.length);
+            for(let i = 0;i<imgs.length;i++) {
+                data.append('data[]', imgs[i]);
+            }
+            fetch("/addimages" ,{
+                method: "POST",
+                body: data
+            })
+
+            imgs.length = 0;
+            var ret = document.getElementById("image-container");
+            ret.innerHTML = '';
+        // .then(response => response.json())
+        // .then(data => console.log(data))
+        // .catch(error => console.error('Error:', error));
+        })
+
+    // function submitImages() {
+    //         const formData = new FormData();
+    //         console.log(imgs.length);
+    //         for (let i = 0; i < imgs.length; i++) {
+    //             formData.append('file[]', imgs[i]);
+    //         }
+    //         console.log(formData);
+
+    //         fetch('/addimages',{
+    //             method: "POST",
+    //             body: formData,
+    //         })
+
+    //     .then(response => response.json())
+    //     .then(data => console.log(data))
+    //     .catch((error) => {
+    //         console.error('Error:', error);
+    //     });
+
+
+    //         // const xhr = new XMLHttpRequest();
+    //         // xhr.open('POST', '/addimages', true);
+    //         // xhr.onload = function() {
+    //         //     if (xhr.status === 200) {
+    //         //         console.log('Images uploaded successfully');
+    //         //         // Optionally, do something after successful upload
+    //         //     } else {
+    //         //         console.log('Error uploading images');
+    //         //         // Optionally, handle errors
+    //         //     }
+    //         // };
+    //         // xhr.send(formData);
+    //     }
+
+    </script>
+</body>
+</html>

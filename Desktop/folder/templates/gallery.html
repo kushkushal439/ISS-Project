@@ -1,0 +1,155 @@
+<!-- <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/gallery.css')}}">
+</head>
+<body>
+    <div class="back"><a href="intro.html">Back</a></div>
+    <h1>Welcome to Gallery</h1>
+    <form id="imageForm" name = "imageForm" action="/gallery" method="POST">
+        <div class="showpics">
+            {% for image in images %}
+            <div class="image-container">
+                <img src="{{ url_for('static', filename=image) }}" alt="saiufvas" style="max-height: 30vh;">
+                <label>
+                    {% if image in selected_images %}
+                        <input type="checkbox" name="selected_images" value="{{ image }}"   checked>
+                    {% else %}
+                        <input type="checkbox" name="selected_images" value="{{ image }}">
+                    {% endif %}
+                    Select
+                </label>
+            </div>
+            {% endfor %}
+        </div>
+        <input type="hidden" id="selectedImagesInput" name="selectedImagesInput">
+       <br><br><br><br><br>
+
+        <button type="submit" value="Submit">UPLOAD</button>
+    </form>
+
+    <script>
+        document.getElementById('imageForm').addEventListener('submit', function(event) {
+            var selectedImages = [];
+            var checkboxes = document.getElementsByName('selected_images');
+            for (var i = 0; i < checkboxes.length; i++) {
+                if (checkboxes[i].checked) {
+                    selectedImages.push(checkboxes[i].value);
+                }
+            }
+            document.getElementById('selectedImagesInput').value = JSON.stringify(selectedImages);
+        });
+    </script>
+</body>
+</html> -->
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/gallery.css')}}">
+    <!-- <link rel="stylesheet" href="gallerypract.css"> -->
+    <link href="https://fonts.googleapis.com/css?family=Boogaloo:regular" rel="stylesheet" />
+<link href="https://fonts.googleapis.com/css?family=Commissioner:100,200,300,regular,500,600,700,800,900" rel="stylesheet" />
+</head>
+<body style = "background-color: black;">
+
+
+
+    <header class="header">
+        <h1 class="logo"><a href="{{url_for('intro')}}" style = "color: #ff0000;">Mahou</a></h1>
+          <ul class="main-nav">
+              <li><a href="{{url_for('main')}}">Brew your magic!</a></li>
+              <li><a href="{{url_for('usrimagelist')}}">Gallery</a></li>
+              <li><a href="{{url_for('addimage')}}">Upload Images</a></li>
+              <form id="logoutForm" action="{{url_for('logout')}}" method="POST">
+                <a href="#" onclick="document.getElementById('logoutForm').submit();" class="logsign">Logout</a>
+            </form>
+              <label class="burger" for="burger">
+                <input type="checkbox" id="burger">
+                <span></span>
+                <span></span>
+                <span></span>
+              </label>
+              <!-- <li><a href="#">Logout</a></li> -->
+          </ul>
+      </header> 
+
+
+
+
+
+
+
+    <form id="imageForm" name = "imageForm" action="/gallery" method="POST">
+        <div class="box">
+            <h1 style="color: rgb(255, 0, 0); text-align: center; font-family: Commissioner; margin-top: -20px;">View your Images </h1>
+        <div class="showpics">
+            {% for image in images %}
+            <div class="image-container">
+                <label for="checkbox{{ loop.index }}">
+                    <img src="{{ url_for('static', filename=image) }}" alt="saiufvas">
+                </label>                
+                <label class="container">
+                    {% if image in selected_images %}
+                        <input type="checkbox" name="selected_images" id = "checkbox{{ loop.index }}" value="{{ image }}"   checked>
+                    {% else %}
+                        <input type="checkbox" name="selected_images" id = "checkbox{{ loop.index }}" value="{{ image }}">
+                    {% endif %}
+                    <div class="checkmark"></div>
+                </label>
+            </div>
+            {% endfor %}
+        </div>
+        <input type="hidden" id="selectedImagesInput" name="selectedImagesInput">
+       <br><br><br><br><br>
+        <!-- <button type="submit" value="Submit">UPLOAD</button> -->
+
+        <div class="box2">
+            <div>
+                <button class="c-button c-button--gooey" type = "submit" value = "Submit"> UPLOAD
+                    <div class="c-button__blobs">
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    </div>
+                </button>
+                <svg xmlns="http://www.w3.org/2000/svg" version="1.1" style="display: block; height: 0; width: 0;">
+                    <defs>
+                    <filter id="goo">
+                        <feGaussianBlur in="SourceGraphic" stdDeviation="10" result="blur"></feGaussianBlur>
+                        <feColorMatrix in="blur" mode="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 18 -7" result="goo"></feColorMatrix>
+                        <feBlend in="SourceGraphic" in2="goo"></feBlend>
+                    </filter>
+                    </defs>
+                </svg>
+            </div>
+
+        </div>
+        
+        
+        
+        </div>
+    </form>
+
+    <script>
+        document.getElementById('imageForm').addEventListener('submit', function(event) {
+            var selectedImages = [];
+            var checkboxes = document.getElementsByName('selected_images');
+            for (var i = 0; i < checkboxes.length; i++) {
+                if (checkboxes[i].checked) {
+                    selectedImages.push(checkboxes[i].value);
+                }
+            }
+            // Set the value of a hidden input field to send selected images to Flask
+            document.getElementById('selectedImagesInput').value = JSON.stringify(selectedImages);
+        });
+    </script>
+</body>
+</html>
